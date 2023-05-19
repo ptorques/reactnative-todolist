@@ -9,11 +9,18 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 10,
     },
-    name:{
+    nameActive:{
         flex: 1,
         fontSize: 16,
         color: '#FFF',
         marginLeft: 16,
+    },
+    nameDone:{
+        flex: 1,
+        fontSize: 16,
+        color: '#7d7d7d',
+        marginLeft: 16,
+        textDecorationLine: "line-through"
     },
     button: {
         width: 56,
@@ -23,5 +30,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         right: 0
+    },
+    checkClick: {
+        width: "78%",
+        height: "100%",
+        backgroundColor: '#262626',
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 10,
+        marginLeft: 20
     },
 })

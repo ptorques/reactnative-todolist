@@ -8,12 +8,19 @@ export default function Home() {
 
   const [task, setTask] = useState<string[]>([])
   const [taskName, setTaskName] = useState('')
-  let done: number = 0
+  const [done, setDone] = useState(0)
+
+  function doneUpdate(add: boolean) {
+    add ? setDone(done + 1) : setDone(done - 1)
+  }
 
   function addTask() {
-    setTask((prevState) => [...prevState, taskName])
-    Alert.alert("Sucesso", "Tarefa adicionada")
-    setTaskName("")
+    if (taskName.replaceAll(" ", "") != "" && !task.includes(taskName)) {
+      setTask((prevState) => [...prevState, taskName])
+      Alert.alert("Sucesso", "Tarefa adicionada")
+      setTaskName("")
+    }
+    else Alert.alert("Erro", "Verifique se a tarefa já existe ou está em branco.")
   }
 
   function rmTask(nome: string) {
@@ -21,7 +28,6 @@ export default function Home() {
       [{
         text: "Sim",
         onPress: () => {
-          done++
           setTask((prevState) => prevState.filter(tarefa => tarefa !== nome))
         }
       },
@@ -50,9 +56,9 @@ export default function Home() {
 
       <View style={styles.counter}>
         <Text style={styles.textCriadas}>Criadas</Text>
-        <TextInput style={styles.counterDisplay} editable={false}>{ task.length }</TextInput>
+        <TextInput style={styles.counterDisplay} editable={false}>{task.length}</TextInput>
         <Text style={styles.textDone}>Concluídas</Text>
-        <TextInput style={styles.counterDisplay} editable={false}>{ done }</TextInput>
+        <TextInput style={styles.counterDisplay} editable={false}>{done}</TextInput>
       </View>
 
       <View style={styles.split}></View>
@@ -61,10 +67,12 @@ export default function Home() {
         data={task}
         keyExtractor={item => item}
         renderItem={({ item }) => (
-          <Task 
-          key={item}
-          name={item}
-          onRemove={() => rmTask(item)}
+          <Task
+            key={item}
+            name={item}
+            onRemove={() => rmTask(item)}
+            done={done}
+            onDone={(add) => doneUpdate(add)}
           />
         )}
         showsVerticalScrollIndicator={false}
